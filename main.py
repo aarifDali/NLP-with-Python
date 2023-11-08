@@ -1,5 +1,5 @@
 import string
-import time
+from collections import Counter
 
 
 text = open('read.txt', encoding='utf-8').read()
@@ -27,11 +27,17 @@ for word in tokenized_words:
     if word not in stop_words:
         final_words.append(word)
 
-print(final_words)
 
-
+emotion_list = []
 with open('emotions.txt', 'r') as file:
     for line in file:
         clear_line = line.replace('\n', '').replace(',', '').replace("'", '').strip()
         word, emotion = clear_line.split(':')
-        print("Word: " + word + " Emotion: " + emotion)
+
+        if word in final_words:
+            emotion_list.append(emotion)
+
+print(emotion_list)
+
+w = Counter(emotion_list)
+print(w)
